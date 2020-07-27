@@ -9,3 +9,17 @@
         {{products.length}} produktów
     </div>
 </div>
+
+<div class="col-9 p-1">
+    <div *ngFor="let product of products" class="card card-outline-primary">
+        <h4 class="card-header">
+            {{ product.name }}
+            <span class="pull-xs-right tag tag-pill tag-primary">
+                {{ product.price | currency:"zł":true:"2.2-2" }}
+            </span>
+        </h4>
+        <div class="card-text p-1">
+            {{ product.description }}
+        </div>
+    </div>
+</div>
