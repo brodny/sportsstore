@@ -11,13 +11,20 @@ export class StoreComponent implements OnInit {
 
   public selectedCategory: string = null;
 
+  // tslint:disable-next-line: no-inferrable-types
+  public productsPerPage: number = 4;
+  // tslint:disable-next-line: no-inferrable-types
+  public selectedPage: number = 1;
+
   constructor(private repository: ProductRepository) { }
 
   ngOnInit(): void {
   }
 
   public get products(): Product[] {
-    return this.repository.getProducts(this.selectedCategory);
+    const pageIndex: number = (this.selectedPage - 1) * this.productsPerPage;
+    return this.repository.getProducts(this.selectedCategory)
+      .slice(pageIndex, pageIndex + this.productsPerPage);
   }
 
   public get categories(): string[] {
@@ -26,5 +33,18 @@ export class StoreComponent implements OnInit {
 
   public changeCategory(newCategory?: string): void {
     this.selectedCategory = newCategory;
+  }
+
+  public changePage(newPage: number): void {
+    this.selectedPage = Number(newPage);
+  }
+
+  public changePageSize(newSize: number): void {
+    this.productsPerPage = Number(newSize);
+  }
+
+  public get pageNumbers(): number[] {
+    return Array(Math.ceil(this.repository.getProducts(this.selectedCategory).length / this.productsPerPage))
+      .fill(0).map((x, i) => i + 1);
   }
 }
