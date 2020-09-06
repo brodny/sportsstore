@@ -2,8 +2,12 @@
     <a class="navbar-brand">SKLEP SPORTOWY</a>
 </div>
 <div class="row">
-    <div class="col-3 bg-info p-1">
-        {{categories.length}} kategorie
+    <div class="col-3 p-1">
+        <button class="btn btn-block btn-outline-primary" (click)="this.changeCategory()">Wszystkie</button>
+        <button *ngFor="let cat of this.categories" class="btn btn-outline-primary btn-block"
+                [class.active]="cat === this.selectedCategory" (click)="this.changeCategory(cat)">
+            {{ cat }}
+        </button>
     </div>
     <div class="col-9 p-1">
         <div *ngFor="let product of products" class="card border-primary my-1">
